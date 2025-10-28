@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         
+        <title>Password Generator</title>
+        <style>
+            .heading{
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 34px;
+                color:red;
+                text-align: center;
+            }
+            .card1 {
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;            
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px auto;
+        }
+
+        .sect1 {
+            display: flex;              
+            align-items: center;
+            gap: 30px;
+        }
+
+        .sect1 label {
+            width: 200px;            
+            text-align: right;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input[type="number"] {
+            width: 60px;
+        }
+        .bt1{
+            background-color: blue;
+            color:white;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 20px;
+            border:none;
+        }
+        .bt1:hover{
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+        #output {
+            font-family: monospace;
+            text-align: center;
+            font-size: 24px;
+
+            
+        }
+        @media(max-width:600px){
+            .card1{
+                width:80%;
+                max-width:350px;
+
+            }
+            .heading{
+                font-size:26px; 
+            }
+            #output{
+                font-size: 15px;
+            }
+        }
+
+
+
+
+
+
+
+        </style>
+    </head>
+    <body>
+        <h1 class="heading">Password Generator</h1>
+        <div class="card1">
+            <div class="sect1">
+                <label>Password Length:</label>
+                <input type="number" id="length" min="4" max="20" value="12">
+            </div>
+            <div class="sect1">
+                <label>Uppercase (A-Z):</label>
+                <input type="checkbox" id="uppercase" checked>
+            </div>
+            <div class="sect1">
+                <label>Lowercase (a-z):</label>
+                <input type="checkbox" id="lowercase" checked>
+            </div>
+            <div class="sect1">
+                <label>Numbers (0-9):</label>
+                <input type="checkbox" id="numbers" checked>
+            </div>
+            <div class="sect1">
+                <label>Symbols (!@#$%):</label>
+                <input type="checkbox" id="symbols" checked>
+            </div>
+            <button id="sbt" class="bt1">Generate Password</button>      
+        </div>
+        <div id="output" class="out"></div>
+
+
+        <script>
+            document.getElementById("sbt").addEventListener("click",generatePassword);
+            function generatePassword(){
+                const length=document.getElementById("length").value;
+                const includeUpper=document.getElementById("uppercase").checked;
+                const  includeLower=document.getElementById("lowercase").checked;
+                const includeSymbols=document.getElementById("symbols").checked;
+                const includeNumbers=document.getElementById("numbers").checked;
+
+                const upperChars="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                const lowChars="abcdefghijklmnopqrstuvwxyz";
+                const numberChars="0123456789";
+                const symbolChars="!@#$%";
+
+                let CharSet="";
+                if(includeUpper){
+                    CharSet+=upperChars;
+                }
+                if(includeLower){
+                    CharSet+=lowChars;
+                }
+                if(includeNumbers){
+                    CharSet+=numberChars;
+                }
+                if(includeSymbols){
+                    CharSet+=symbolChars;
+                }
+                if(CharSet===""){
+                    document.getElementById("output").textContent="Please select at least one character type!";
+                    return;
+                }
+                let password="";
+                for(let i=0; i<length;i++){
+                    const randomIndex=Math.floor(Math.random()*CharSet.length);
+                    password+=CharSet[randomIndex];
+                }
+                document.getElementById("output").textContent="Your Password is:"+" "+password;
+
+            }
+        </script>
+
+
+
+
+    </body>
+</html>
